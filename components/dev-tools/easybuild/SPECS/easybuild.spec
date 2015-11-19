@@ -97,8 +97,6 @@ set             home                    \$::env(HOME)
 
 prepend-path    PATH                    %{install_path}/software/EasyBuild/%{version}/bin
 prepend-path    PATH                    ${LMOD_DIR}
-prepend-path	LD_LIBRARY_PATH         %{install_path}/software/EasyBuild/%{version}/lib
-prepend-path	LIBRARY_PATH            %{install_path}/software/EasyBuild/%{version}/lib
 module          use                     \$home/.local/easybuild/modules/all
 
 setenv          EBROOTEASYBUILD         %{install_path}/software/EasyBuild/%{version}

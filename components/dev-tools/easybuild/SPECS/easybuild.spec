@@ -94,10 +94,11 @@ module-whatis "URL: http://hpcugent.github.com/easybuild/"
 
 set             version                 %{version}
 set             home                    \$::env(HOME)
+set             EASYBUILD_PREFIX        \$home/eb
 
 prepend-path    PATH                    %{install_path}/software/EasyBuild/%{version}/bin
 prepend-path    PATH                    ${LMOD_DIR}
-module          use                     \$home/.local/easybuild/modules/all
+module          use                     \$EASYBUILD_PREFIX
 
 setenv          EBROOTEASYBUILD         %{install_path}/software/EasyBuild/%{version}
 setenv          EBVERSIONEASYBUILD      %{version}

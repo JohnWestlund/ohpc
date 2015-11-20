@@ -68,6 +68,9 @@ python ./bootstrap_eb.py %{buildroot}/%{install_path}
 rm %{buildroot}%{install_path}/modules/base/EasyBuild/%{version}
 rm bootstrap_eb.py
 
+# dynamic configuration for other packages to use
+%{__mkdir} -p %{buildroot}/etc/easybuild.d
+
 # Patch to add SLES 12 kernel version
 cd %{buildroot}%{install_path}/software/EasyBuild/%{version}/lib/python$PYTHON_VERSION/site-packages/easybuild_framework-%{version}-py$PYTHON_VERSION.egg/easybuild/tools
 patch -p9 < %{_sourcedir}/easybuild-sles12.patch
@@ -96,6 +99,9 @@ set             version                 %{version}
 set             home                    \$::env(HOME)
 set             EASYBUILD_PREFIX        \$home/eb
 
+# this is the default, but make sure it's there
+prepend-path    XDG_CONFIG_DIRS         /etc
+
 prepend-path    PATH                    %{install_path}/software/EasyBuild/%{version}/bin
 prepend-path    PATH                    ${LMOD_DIR}
 module          use                     \$EASYBUILD_PREFIX
@@ -104,7 +110,7 @@ setenv          EBROOTEASYBUILD         %{install_path}/software/EasyBuild/%{ver
 setenv          EBVERSIONEASYBUILD      %{version}
 setenv          EASYBUILD_MODULES_TOOL  Lmod
 
-prepend-path	PYTHONPATH	    %{install_path}/software/EasyBuild/%{version}/lib/python2.7/site-packages
+prepend-path    PYTHONPATH              %{install_path}/software/EasyBuild/%{version}/lib/python2.7/site-packages
 
 EOF
 
@@ -122,7 +128,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root,-)
 %{OHPC_HOME}
-
+%dir /etc/easybuild.d
 
 %changelog
 
